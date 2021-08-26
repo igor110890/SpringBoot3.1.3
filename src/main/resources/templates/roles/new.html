@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new role</title>
+</head>
+<body>
+<h1>Create new role</h1>
+<br>
+<table>
+    <tbody>
+    <form th:action="@{/admin/roles}" th:method="POST" th:object="${role}">
+        <tr>
+            <td><label for="rolename">Role Name</label></td>
+            <td><input id="rolename" th:field="*{roleName}"
+                       th:utext="  |NOTE: Strongly recommends use 'ROLE_' prefix in role name |" type="text"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td><label for="description">Password</label></td>
+            <td><input id="description" th:field="*{description}" type="text"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td colspan="2">
+                <center><input type="submit" value="Create Role"></center>
+            </td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<br>
+<br>
+<hr>
+<div sec:authorize="isAuthenticated()">
+    <form method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
+</body>
+</html>

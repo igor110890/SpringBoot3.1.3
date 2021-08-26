@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<h1 th:text="|Edit user: ${user.getUsername()}|">Edit user</h1>
+<br>
+<hr>
+<br>
+<table>
+    <tbody>
+    <form th:action="@{/admin/users/{id}(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
+        <tr>
+            <td><label for="username">Username</label></td>
+            <td><input id="username" th:field="*{name}" type="text"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td><label for="first_name">First Name</label></td>
+            <td><input id="first_name" th:field="*{firstName}" type="text"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td><label for="last_name">Last Name</label></td>
+            <td><input id="last_name" th:field="*{lastName}" type="text"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td><input id="email" th:field="*{email}" type="text"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td><label for="age">Age</label></td>
+            <td><input id="age" th:field="*{age}" type="number"/></td>
+        </tr>
+        <br>
+        <tr>
+            <td><label for="roles">Roles</label></td>
+            <td><select id="roles" multiple="multiple" th:field="*{roles}" th:size="${roleList.size()}">
+                <option th:each="role : ${roleList}"
+                        th:selected="${user.getRoles().contains(role)}" th:text="${role.roleName.substring(5)}"
+                        th:value="${role.id}">
+                </option>
+            </select>
+            </td>
+        </tr>
+        <br>
+        <tr>
+            <td colspan="2">
+                <center><input type="submit" value="Update User"></center>
+            </td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<br>
+<br>
+<hr>
+<div sec:authorize="isAuthenticated()">
+    <form method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
+</body>
+</html>

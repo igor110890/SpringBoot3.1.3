@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+</head>
+<body>
+<h1>Users</h1>
+<br>
+<hr/>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>E-Mail</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getUsername()}">Username</td>
+        <td th:text="${user.getFirstName}">First Name</td>
+        <td th:text="${user.getLastName()}">Last Name</td>
+        <td th:text="${user.getEmail()}">Email</td>
+        <td>
+            <form th:action="@{/admin/users/{id}(id=${user.getId()})}" th:method="GET">
+                <input type="submit" value="View Details">
+            </form>
+        <td>
+            <form th:action="@{/admin/users/{id}/edit(id=${user.getId()})}" th:method="GET">
+                <input type="submit" value="Edit Details">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/admin/users/{id}(id=${user.getId()})}" th:method="DELETE">
+                <input type="submit" value="Delete User">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/admin/users/{id}/change_password(id=${user.getId()})}" th:method="GET">
+                <input type="submit" value="Change Password">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<form method="GET" th:action="@{/admin/users/new}">
+    <input type="submit" value="Create New User"/>
+</form>
+<br>
+<br>
+<hr>
+<div sec:authorize="isAuthenticated()">
+    <form method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
+</body>
+</html>
